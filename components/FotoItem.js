@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Switch, Image, TouchableOpacity } from 'react-native';
-import MyButton from './MyButton';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
 
 const padding = 5
 
 class FotoItem extends Component {
 
   render() {
+    const width = this.props.width - padding * 2
+    const height = this.props.height - padding * 2
+    // TODO SELECT IMAGE
     return (
       <TouchableOpacity style={styles.wrapper} onPress={() => this.props.onPress()}
         onLongPress={() => this.props.onLongPress()}>
-        {this.props.isSelected ?
-          <View style={styles.selectCover}></View> :
-          <></>}
-        <Image style={{
-          ...styles.image,
-          width: this.props.width - padding * 2,
-          height: this.props.height - padding * 2,
+        <ImageBackground style={{
+          width,
+          height,
         }}
-          source={{ uri: this.props.uri }} />
-        <Text style={styles.text}>{this.props.id}</Text>
+          imageStyle={{ borderRadius: 10 }}
+          source={{ uri: this.props.uri }}>
+          {this.props.isSelected ?
+            <>
+              <View style={{
+                ...styles.selectCover,
+                width,
+                height
+              }} >
+                <Image style={{
+                  ...styles.coverImg,
+                  width: width / 2,
+                  height: height / 2
+                }} source={require('../assets/plus.png')} />
+              </View>
+
+            </> :
+            <></>}
+          <Text style={styles.text}>{this.props.id}</Text>
+        </ImageBackground>
       </TouchableOpacity>
     );
   }
@@ -33,10 +49,17 @@ const styles = StyleSheet.create({
     position: 'relative',
     display: 'flex'
   },
-  image: {
-    borderRadius: 15,
-  },
   selectCover: {
+    borderRadius: 10,
+    flex: 1,
+    opacity: 0.5,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10
+  },
+  coverImg: {
+    zIndex: 100
   },
   text: {
     position: 'absolute',

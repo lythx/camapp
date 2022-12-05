@@ -40,8 +40,9 @@ export default class Gallery extends Component {
     const { assets } = await MediaLibrary.getAssetsAsync({
       album,
       first: 100,
-      mediaType: ['photo']
+      mediaType: 'photo'
     })
+    console.log(assets)
     this.setState({ photos: assets.map(a => ({ ...a, isSelected: false })) })
   }
 
@@ -57,8 +58,18 @@ export default class Gallery extends Component {
   }
 
   onPhotoPress(id) {
+    const photo = this.state.photos.find(a => a.id === id)
     this.props.navigation.
-      navigate("camera", { refresh: () => this.getPhotos() })
+      navigate("photo", {
+        refresh: () => this.getPhotos(),
+        uri: photo.uri, width: photo.width, height: photo.height
+      })
+  }
+
+  async onDelete() {
+    await MediaLibrary.deleteAssetsAsync(this.state.photos.filter(a => a.isSelected).map(a => a.id));
+    this.state.photos = this.state.photos.filter(a => !a.isSelected)
+    this.forceUpdate()
   }
 
   render() {
@@ -77,7 +88,7 @@ export default class Gallery extends Component {
             onPress={() => this.onCameraPress()} />
           <MyButton text='DELETE' width={100} height={30} margin={10}
             color='#eeeeee' background='#ff0055'
-            onPress={() => this.onDetails()} />
+            onPress={() => this.onDelete()} />
         </View>
         <View style={styles.list}>
           <FlatList
@@ -103,7 +114,7 @@ const styles = StyleSheet.create({
   top: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-evenly'
   },
   list: {
     flex: 10

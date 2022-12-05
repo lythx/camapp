@@ -2,21 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import * as Font from "expo-font";
 import { ActivityIndicator } from 'react-native'; // okrągła animacja ładowania
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 60,
-    textAlign: 'center'
-  },
-  text: {
-    fontSize: 40,
-    textAlign: 'center'
-  }
-})
 
 export default class Main extends Component {
   constructor(props) {
@@ -28,7 +13,7 @@ export default class Main extends Component {
 
   componentDidMount = async () => {
     await Font.loadAsync({
-      'myfont': require('../font.ttf'), // Uwaga: proszę w nazwie fonta nie używać dużych liter
+      myfont: require('../font.ttf'), // Uwaga: proszę w nazwie fonta nie używać dużych liter
     });
     this.setState({ fontLoaded: true })
   }
@@ -56,3 +41,19 @@ export default class Main extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  headerText: {
+    fontSize: 60,
+    textAlign: 'center'
+  },
+  text: {
+    fontSize: 40,
+    textAlign: 'center'
+  }
+})
