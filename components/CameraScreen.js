@@ -43,7 +43,12 @@ class CameraScreen extends Component {
             style={{ flex: 1 }}
             type={this.state.type}>
             <View style={{ flex: 1, position: 'relative' }}>
-              {<CircleButton size={100} right={20} bottom={20} onPress={() => this.takePhoto()} />}
+              <CircleButton size={100} left={20} bottom={20}
+                onPress={() => this.takePhoto()} image={require('../assets/goback.png')} />
+              <CircleButton size={120} alignSelf={'center'} bottom={20}
+                onPress={() => this.takePhoto()} image={require('../assets/plus.png')} />
+              <CircleButton size={100} right={20} bottom={20}
+                onPress={() => this.takePhoto()} image={require('../assets/settings.png')} />
             </View>
           </Camera>
         </View>

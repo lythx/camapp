@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const styles = StyleSheet.create({
   opacity: {
@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     opacity: 0.5,
     position: 'absolute'
-  }
+  },
 })
 
 class CircleButton extends Component {
 
   render() {
-    console.log(this.props)
+    console.log(this.props.image)
     return (
       <TouchableOpacity onPress={() => this.props.onPress()} style={{
         ...styles.opacity,
@@ -27,8 +27,14 @@ class CircleButton extends Component {
         top: this.props.top,
         bottom: this.props.bottom,
         left: this.props.left,
-        right: this.props.right
+        right: this.props.right,
+        alignSelf: this.props.alignSelf
       }}>
+        <Image source={this.props.image} style={{
+          width: this.props.size / 1.5,
+          height: this.props.size / 1.5,
+          zIndex: 100
+        }} />
       </ TouchableOpacity>
     );
   }
