@@ -3,8 +3,8 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const styles = StyleSheet.create({
   opacity: {
-    width: 20,
-    height: 20,
+    width: 35,
+    height: 35,
     alignSelf: 'center',
     borderRadius: 1000000,
     justifyContent: 'center',
@@ -13,14 +13,13 @@ const styles = StyleSheet.create({
     borderColor: '#ff0055',
     borderWidth: 1,
     opacity: 0.5,
-    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center'
   },
   selected: {
     borderRadius: 1000000,
-    width: 20 * 0.8,
-    height: 20 * 0.8,
+    width: 35 * 0.6,
+    height: 35 * 0.6,
     backgroundColor: '#ff0055',
   }
 })
@@ -30,16 +29,9 @@ export default class RadioButton extends Component {
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.onPress()} style={{
-        ...styles.opacity,
-        width: this.props.size,
-        height: this.props.size,
-        top: this.props.top,
-        bottom: this.props.bottom,
-        left: this.props.left,
-        right: this.props.right,
-        alignSelf: this.props.alignSelf
+        ...styles.opacity
       }}>
-        {!this.props.isPressed ? <></> :
+        {!this.props.selected ? <></> :
           <View style={styles.selected} />}
       </ TouchableOpacity>
     );

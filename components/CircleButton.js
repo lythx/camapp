@@ -32,7 +32,8 @@ class CircleButton extends Component {
         <Image source={this.props.image} style={{
           width: this.props.size / 1.5,
           height: this.props.size / 1.5,
-          zIndex: 100
+          zIndex: 100,
+          opacity: 1
         }} />
       </ TouchableOpacity>
     );

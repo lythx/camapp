@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Animated, StyleSheet } from 'react-native';
 import { Camera } from "expo-camera";
 import CircleButton from './CircleButton';
 import * as MediaLibrary from "expo-media-library";
@@ -12,8 +12,7 @@ class CameraScreen extends Component {
       settingsDisplayed: false,
       hasCameraPermission: null,         // przydzielone uprawnienia do używania kamery
       type: Camera.Constants.Type.back,  // typ kamery
-      settingsPos: new Animated.Value(900),
-      settingHidden: true
+      settingsPos: new Animated.Value(900)
     };
   }
 
@@ -31,7 +30,7 @@ class CameraScreen extends Component {
   }
 
   toggle() {
-    const target = this.isHidden ? 0 : 900
+    const target = this.state.settingsDisplayed ? 900 : 0
     Animated.spring(
       this.state.settingsPos,
       {
@@ -42,7 +41,6 @@ class CameraScreen extends Component {
         useNativeDriver: true
       }
     ).start();
-    this.isHidden = !this.isHidden;
   }
 
 
@@ -70,8 +68,10 @@ class CameraScreen extends Component {
                       { translateY: this.state.settingsPos }
                     ]
                   }]} >
-                <RadioGroup />
-                {/* <Text>ANIMATE ME!</Text> */}
+                <View style={styles.settingsBackground} />
+                <Text style={styles.settingsHeader}>SETTINGS</Text>
+                <RadioGroup title={'WHITE BALANCE'} options={['aaaaaaaa', 'bbbbbbb', 'bbbbbbb', 'bbbbbbb']} />
+                <RadioGroup title={'FLASH MODE'} options={['aaaaaaaa', 'bbbbbbb', 'bbbbbbb', 'bbbbbbb']} />
               </Animated.ScrollView>
             </View>
             <View style={{ flex: 1, position: 'relative' }}>
@@ -101,9 +101,24 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '50%',
-    backgroundColor: '#000000',
-    opacity: 0.5,
+    // backgroundColor: '#000000',
+    // opacity: 1, //0.5,
     height: 1000,
+  },
+  settingsBackground: {
+    backgroundColor: '#000000',
+    position: 'absolute',
+    opacity: 0.5,
+    height: '100%',
+    width: '100%'
+  },
+  settingsHeader: {
+    fontWeight: 'semibold',
+    fontSize: 30,
+    color: '#ffffff',
+    margin: 20,
+    marginBottom: 0,
+    alignSelf: 'center'
   }
 });
 
