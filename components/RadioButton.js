@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const styles = StyleSheet.create({
   opacity: {
-    width: 80,
-    height: 80,
+    width: 20,
+    height: 20,
     alignSelf: 'center',
     borderRadius: 1000000,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000000',
+    borderColor: '#ff0055',
+    borderWidth: 1,
     opacity: 0.5,
-    position: 'absolute'
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
+  selected: {
+    borderRadius: 1000000,
+    width: 20 * 0.8,
+    height: 20 * 0.8,
+    backgroundColor: '#ff0055',
+  }
 })
 
-class CircleButton extends Component {
+export default class RadioButton extends Component {
 
   render() {
     return (
@@ -29,14 +39,9 @@ class CircleButton extends Component {
         right: this.props.right,
         alignSelf: this.props.alignSelf
       }}>
-        <Image source={this.props.image} style={{
-          width: this.props.size / 1.5,
-          height: this.props.size / 1.5,
-          zIndex: 100
-        }} />
+        {!this.props.isPressed ? <></> :
+          <View style={styles.selected} />}
       </ TouchableOpacity>
     );
   }
 }
-
-export default CircleButton;

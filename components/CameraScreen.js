@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Animated, StyleSheet, ScrollView } from 'react-native';
 import { Camera } from "expo-camera";
 import CircleButton from './CircleButton';
 import * as MediaLibrary from "expo-media-library";
+import RadioGroup from './RadioGroup';
 
 class CameraScreen extends Component {
   constructor(props) {
     super(props);
-    super(props);
     this.state = {
+      settingsDisplayed: false,
       hasCameraPermission: null,         // przydzielone uprawnienia do używania kamery
       type: Camera.Constants.Type.back,  // typ kamery
+      settingsPos: new Animated.Value(900),
+      settingHidden: true
     };
   }
 
@@ -27,6 +30,22 @@ class CameraScreen extends Component {
     }
   }
 
+  toggle() {
+    const target = this.isHidden ? 0 : 900
+    Animated.spring(
+      this.state.settingsPos,
+      {
+        toValue: target,
+        velocity: 1,
+        tension: 10,
+        friction: 10,
+        useNativeDriver: true
+      }
+    ).start();
+    this.isHidden = !this.isHidden;
+  }
+
+
   render() {
     const { hasCameraPermission } = this.state; // podstawienie zmiennej ze state
     if (hasCameraPermission == null) {
@@ -42,13 +61,30 @@ class CameraScreen extends Component {
             }}
             style={{ flex: 1 }}
             type={this.state.type}>
+            <View style={{ flex: 1 }}>
+              <Animated.ScrollView
+                style={[
+                  styles.animatedView,
+                  {
+                    transform: [
+                      { translateY: this.state.settingsPos }
+                    ]
+                  }]} >
+                <RadioGroup />
+                {/* <Text>ANIMATE ME!</Text> */}
+              </Animated.ScrollView>
+            </View>
             <View style={{ flex: 1, position: 'relative' }}>
               <CircleButton size={100} left={20} bottom={20}
                 onPress={() => this.takePhoto()} image={require('../assets/goback.png')} />
               <CircleButton size={120} alignSelf={'center'} bottom={20}
                 onPress={() => this.takePhoto()} image={require('../assets/plus.png')} />
               <CircleButton size={100} right={20} bottom={20}
-                onPress={() => this.takePhoto()} image={require('../assets/settings.png')} />
+                onPress={() => {
+                  this.setState({ settingsDisplayed: !this.state.settingsDisplayed })
+                  this.toggle()
+                }}
+                image={require('../assets/settings.png')} />
             </View>
           </Camera>
         </View>
@@ -57,5 +93,18 @@ class CameraScreen extends Component {
   }
 
 }
+
+const styles = StyleSheet.create({
+  animatedView: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '50%',
+    backgroundColor: '#000000',
+    opacity: 0.5,
+    height: 1000,
+  }
+});
 
 export default CameraScreen;

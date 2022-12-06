@@ -42,7 +42,6 @@ export default class Gallery extends Component {
       first: 100,
       mediaType: 'photo'
     })
-    console.log(assets)
     this.setState({ photos: assets.map(a => ({ ...a, isSelected: false })) })
   }
 
