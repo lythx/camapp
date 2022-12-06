@@ -12,7 +12,15 @@ class CameraScreen extends Component {
       settingsDisplayed: false,
       hasCameraPermission: null,         // przydzielone uprawnienia do używania kamery
       type: Camera.Constants.Type.back,  // typ kamery
-      settingsPos: new Animated.Value(900)
+      settingsPos: new Animated.Value(900),
+      ratio: '3:4',
+      whiteBalance: 0,
+      pictureSize: null, // TODO CHECK
+      flashMode: 0,
+      ratios: [],
+      whiteBalances: [],
+      pictureSizes: [],
+      flashModes: []
     };
   }
 
@@ -43,6 +51,14 @@ class CameraScreen extends Component {
     ).start();
   }
 
+  async getCameraParams() {
+    if (this.camera) {
+      this.state.whiteBalances = Object.entries(Camera.Constants.WhiteBalance)
+      this.state.flashModes = Object.entries(Camera.Constants.FlashMode)
+      this.state.pictureSizes = await this.camera.getAvailablePictureSizesAsync('4:3')
+      this.state.ratios = await this.camera.getSupportedRatiosAsync()
+    }
+  }
 
   render() {
     const { hasCameraPermission } = this.state; // podstawienie zmiennej ze state
@@ -58,7 +74,13 @@ class CameraScreen extends Component {
               this.camera = ref; // Uwaga: referencja do kamery używana później
             }}
             style={{ flex: 1 }}
-            type={this.state.type}>
+            type={this.state.type}
+            onCameraReady={() => this.getCameraParams()}
+            ratio={this.state.ratio}
+            whiteBalance={this.state.whiteBalance}
+            pictureSize={this.state.pictureSize}
+            flashMode={this.state.flashMode}
+          >
             <View style={{ flex: 1 }}>
               <Animated.ScrollView
                 style={[
