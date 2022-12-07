@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import * as MediaLibrary from "expo-media-library";
+import * as Sharing from 'expo-sharing';
 import MyButton from './MyButton';
 
 class BigPhoto extends Component {
@@ -8,6 +9,17 @@ class BigPhoto extends Component {
     super(props);
     this.state = {
     };
+  }
+
+  async onShare() {
+    const isAvailableAsync = await Sharing.isAvailableAsync()
+    if (isAvailableAsync) { Sharing.shareAsync(this.props.route.params.uri) }
+  }
+
+  async onDelete() {
+    await MediaLibrary.deleteAssetsAsync([this.props.route.params.id]);
+    await this.props.route.params.refresh()
+    this.props.navigation.goBack()
   }
 
   render() {
@@ -22,10 +34,10 @@ class BigPhoto extends Component {
         <View style={styles.buttonWrapper}>
           <MyButton text='SHARE' width={100} height={30} margin={10}
             color='#eeeeee' background='#ff0055'
-            onPress={() => this.setState({ isGridLayout: !this.state.isGridLayout })} />
+            onPress={() => this.onShare()} />
           <MyButton text='DELETE' width={100} height={30} margin={10}
             color='#eeeeee' background='#ff0055'
-            onPress={() => this.setState({ isGridLayout: !this.state.isGridLayout })} />
+            onPress={() => this.onDelete()} />
         </View>
       </View>
     );

@@ -20,7 +20,8 @@ export default function App() {
         }} />
         <Stack.Screen name="camera" component={CameraScreen} options={{
           title: 'Kamera',
-          ...styles
+          ...styles,
+          headerShown: false
         }} />
         <Stack.Screen name="photo" component={BigPhoto} options={{
           title: 'Wybrane zdjęcie',

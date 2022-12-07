@@ -61,7 +61,7 @@ export default class Gallery extends Component {
     this.props.navigation.
       navigate("photo", {
         refresh: () => this.getPhotos(),
-        uri: photo.uri, width: photo.width, height: photo.height
+        uri: photo.uri, width: photo.width, height: photo.height, id
       })
   }
 

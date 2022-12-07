@@ -5,13 +5,15 @@ import RadioButton from './RadioButton';
 export default class RadioGroup extends Component {
   constructor(props) {
     super(props);
+    console.log(props.defaultValue, 'defvalradio')
     this.state = {
-      selected: -1
+      selected: this.props.defaultValue
     };
   }
 
   handleButtonPress(index) {
     this.setState({ selected: index })
+    this.props.onValueChange(this.props.options[index][1])
   }
 
   render() {
@@ -21,7 +23,7 @@ export default class RadioGroup extends Component {
         {this.props.options.map((a, i) => <View style={styles.groupRow} key={Math.random()}>
           <RadioButton key={Math.random()} onPress={() => this.handleButtonPress(i)}
             selected={i === this.state.selected} />
-          <Text style={styles.text} key={Math.random()}>{a}</Text>
+          <Text style={styles.text} key={Math.random()}>{a[0]}</Text>
         </View >)}
       </View>
     );
