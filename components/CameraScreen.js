@@ -159,8 +159,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '50%',
-    // backgroundColor: '#000000',
-    // opacity: 1, //0.5,
     height: 1000,
   },
   settingsBackground: {
@@ -175,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#ffffff',
     margin: 20,
+    marginTop: 40,
     marginBottom: 0,
     alignSelf: 'center'
   }

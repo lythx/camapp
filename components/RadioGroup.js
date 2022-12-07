@@ -5,7 +5,6 @@ import RadioButton from './RadioButton';
 export default class RadioGroup extends Component {
   constructor(props) {
     super(props);
-    console.log(props.defaultValue, 'defvalradio')
     this.state = {
       selected: this.props.defaultValue
     };
