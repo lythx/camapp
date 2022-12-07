@@ -69,7 +69,7 @@ class CameraScreen extends Component {
     if (this.camera) {
       this.state.whiteBalances = Object.entries(Camera.Constants.WhiteBalance)
       this.state.flashModes = Object.entries(Camera.Constants.FlashMode)
-      this.state.pictureSizes = (await this.camera.getAvailablePictureSizesAsync('4:3')).map(a => [a, a])
+      this.state.pictureSizes = (await this.camera.getAvailablePictureSizesAsync(this.state.ratio)).map(a => [a, a])
       this.state.ratios = (await this.camera.getSupportedRatiosAsync()).map(a => [a, a])
     }
   }
@@ -124,7 +124,10 @@ class CameraScreen extends Component {
                   defaultValue={defaultFlashMode} />
                 <RadioGroup title={'CAMERA RATIO'}
                   options={this.state.ratios}
-                  onValueChange={(value) => this.setState({ ratio: value })}
+                  onValueChange={async (value) => this.setState({
+                    ratio: value,
+                    pictureSizes: (await this.camera.getAvailablePictureSizesAsync(value)).map(a => [a, a])
+                  })}
                   defaultValue={defaultRatio} />
                 <RadioGroup title={'PICTURE SIZES'}
                   options={this.state.pictureSizes}
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '50%',
-    height: 1000,
+    height: '200%'
   },
   settingsBackground: {
     backgroundColor: '#000000',
